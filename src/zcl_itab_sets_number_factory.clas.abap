@@ -28,13 +28,9 @@ class ZCL_ITAB_SETS_NUMBER_FACTORY implementation.
 
   method create.
 
-    r_itab_sets = cond #( when i_set_size gt 1
-                          then cond #( when lines( i_itab ) eq 0
-                                       then new #( 0 )
-                                       when lines( i_itab ) eq i_set_size
-                                       then new #( 1 )
-                                       else new #( floor( conv decfloat16( lines( i_itab ) / i_set_size ) ) + 1 ) )
-                          else throw zcx_dynamic_check( new zcl_text_symbol_msg( 'The size of the set cannot be less than 1'(001) )->as_error( ) ) ).
+    r_itab_sets = cond #( when i_set_size ge 1
+                          then new #( ceil( conv decfloat16( lines( i_itab ) / i_set_size ) ) )
+                          else throw zcx_dynamic_check( new zcl_text_symbol_message( 'The size of the set cannot be less than 1'(001) )->as_error( ) ) ).
 
   endmethod.
 
