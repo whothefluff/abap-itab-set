@@ -85,7 +85,8 @@ class _Tests implementation.
 
     cl_abap_unit_assert=>assert_equals( act = new _FakeClass( )->create( i_itab = tabGreaterThanSetSize
                                                                          i_set_size = someSetSize )->value( )
-                                        exp = floor( conv decfloat34( sizeOfTabGreaterThanSetSize / someSetSize ) ) + 1 ).
+                                        exp = trunc( conv decfloat16( sizeOfTabGreaterThanSetSize / someSetSize ) ) + cond #( when frac( conv decfloat16( sizeOfTabGreaterThanSetSize / someSetSize ) ) gt 0
+                                                                                                                              then 1 ) ).
 
   endmethod.
   method methCreateWithItabLTSizeRets1a.
